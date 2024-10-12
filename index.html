@@ -154,16 +154,16 @@
         </section>
 
         <section id="battle_strategy" style="display:none;">
-            <h2>Battle Strategy Mini-Game</h2>
-            <p>General Washington needs your help to plan the next battle. Use your resources wisely!</p>
-            <div id="mini-game-container"></div>
-        </section>
+    <h2>Battle Strategy Mini-Game</h2>
+    <p>General Washington needs your help to plan the next battle. Use your resources wisely!</p>
+    <div id="battle-strategy-container"></div>
+</section>
 
-        <section id="spy_network" style="display:none;">
-            <h2>Building a Spy Network</h2>
-            <p>The British have spies everywhere. It's time to build our own network to gather crucial intelligence.</p>
-            <div id="mini-game-container"></div>
-        </section>
+<section id="spy_network" style="display:none;">
+    <h2>Building a Spy Network</h2>
+    <p>The British have spies everywhere. It's time to build our own network to gather crucial intelligence.</p>
+    <div id="spy-network-container"></div>
+</section>
 
         <section id="game_end" style="display:none;">
             <h2>The Birth of a Nation</h2>
@@ -297,48 +297,48 @@
         }
 
         function initBattleStrategy() {
-            const container = document.getElementById('mini-game-container');
-            container.innerHTML = `
-                <p>Allocate your resources to win the battle:</p>
-                <button onclick="allocateResources('troops')">Use Troops (${resources.troops})</button>
-                <button onclick="allocateResources('supplies')">Use Supplies (${resources.supplies})</button>
-                <button onclick="allocateResources('funding')">Use Funding (${resources.funding})</button>
-                <p id="battle-result"></p>
-            `;
-        }
+    const container = document.getElementById('battle-strategy-container');
+    container.innerHTML = `
+        <p>Allocate your resources to win the battle:</p>
+        <button onclick="allocateResources('troops')">Use Troops (${resources.troops})</button>
+        <button onclick="allocateResources('supplies')">Use Supplies (${resources.supplies})</button>
+        <button onclick="allocateResources('funding')">Use Funding (${resources.funding})</button>
+        <p id="battle-result"></p>
+    `;
+}
 
         function allocateResources(type) {
-            const amount = Math.min(resources[type], 50);
-            resources[type] -= amount;
-            updateResources(0, 0, 0); // This will update the display
-            const success = Math.random() < (amount / 100 + skills.military / 10);
-            const resultElement = document.getElementById('battle-result');
-            if (success) {
-                resultElement.textContent = "Victory! Your strategy was successful.";
-                playerScore += 5;
-                updateSkills(0, 1, 0);
-                updateRelationships(2, 0, 0);
-            } else {
-                resultElement.textContent = "Defeat. Your strategy didn't work out this time.";
-                updateRelationships(-1, 0, 0);
-            }
-            setTimeout(() => {
-                document.getElementById('battle_strategy').style.display = 'none';
-                initSpyNetwork();
-                document.getElementById('spy_network').style.display = 'block';
-            }, 2000);
-        }
+    const amount = Math.min(resources[type], 50);
+    resources[type] -= amount;
+    updateResources(0, 0, 0); // This will update the display
+    const success = Math.random() < (amount / 100 + skills.military / 10);
+    const resultElement = document.getElementById('battle-result');
+    if (success) {
+        resultElement.textContent = "Victory! Your strategy was successful.";
+        playerScore += 5;
+        updateSkills(0, 1, 0);
+        updateRelationships(2, 0, 0);
+    } else {
+        resultElement.textContent = "Defeat. Your strategy didn't work out this time.";
+        updateRelationships(-1, 0, 0);
+    }
+    setTimeout(() => {
+        document.getElementById('battle_strategy').style.display = 'none';
+        document.getElementById('spy_network').style.display = 'block';
+        initSpyNetwork();
+    }, 2000);
+}
 
         function initSpyNetwork() {
-            const container = document.getElementById('mini-game-container');
-            container.innerHTML = `
-                <p>Choose your spying method:</p>
-                <button onclick="conductEspionage('bribe')">Bribe Officials (Cost: 20 Funding)</button>
-                <button onclick="conductEspionage('infiltrate')">Infiltrate Enemy Ranks (Cost: 10 Troops)</button>
-                <button onclick="conductEspionage('codebreak')">Intercept and Decode Messages (No cost)</button>
-                <p id="espionage-result"></p>
-            `;
-        }
+    const container = document.getElementById('spy-network-container');
+    container.innerHTML = `
+        <p>Choose your spying method:</p>
+        <button onclick="conductEspionage('bribe')">Bribe Officials (Cost: 20 Funding)</button>
+        <button onclick="conductEspionage('infiltrate')">Infiltrate Enemy Ranks (Cost: 10 Troops)</button>
+        <button onclick="conductEspionage('codebreak')">Intercept and Decode Messages (No cost)</button>
+        <p id="espionage-result"></p>
+    `;
+}
 
         function conductEspionage(method) {
             let success = false;
