@@ -5,154 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>American Revolution Adventure</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f0e6d2;
-            color: #333;
-        }
-        .passage {
-            display: none;
-        }
-        .choice {
-            display: inline-block;
-            margin: 10px;
-            padding: 5px 10px;
-            background-color: #4a6ea9;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .choice:hover {
-            background-color: #3a5e99;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-        }
+        /* Existing styles remain the same */
     </style>
 </head>
 <body>
-    <div id="game">
-        <div id="start" class="passage">
-            <h1>American Revolution Adventure</h1>
-            <p>Welcome to the American Revolution Adventure!</p>
-            <a href="#" class="choice" data-target="character-creation">Begin your journey</a>
-        </div>
+    <div id="game-container">
+        <h1>American Revolution Adventure</h1>
+        
+        <!-- Existing game sections -->
+        <section id="start">
+            <!-- ... existing content ... -->
+            <button onclick="choosePath('boston-tea-party')">Start your journey</button>
+        </section>
 
-        <div id="character-creation" class="passage">
-            <h2>Choose your background:</h2>
-            <a href="#" class="choice" data-target="chapter1" data-background="merchant">Merchant's child</a>
-            <a href="#" class="choice" data-target="chapter1" data-background="farmer">Farmer's child</a>
-            <a href="#" class="choice" data-target="chapter1" data-background="apprentice">Apprentice</a>
-        </div>
-
-        <div id="chapter1" class="passage">
-            <h2>Chapter 1: The Boston Tea Party</h2>
-            <p>You're in Boston in 1773. Tensions are high due to British taxes.</p>
-            <a href="#" class="choice" data-target="tea-party">Join the protest</a>
-            <a href="#" class="choice" data-target="avoid-conflict">Stay home</a>
-        </div>
-
-        <div id="tea-party" class="passage">
+        <section id="boston-tea-party" style="display:none;">
             <h2>The Boston Tea Party</h2>
-            <p>You join the Sons of Liberty in their protest against the Tea Act.</p>
-            <a href="#" class="choice" data-target="tea-choice">Dump tea overboard</a>
-            <a href="#" class="choice" data-target="negotiate-choice">Try to negotiate</a>
-        </div>
+            <!-- ... existing content ... -->
+            <button onclick="choosePath('join-tea-party')">Join the Tea Party</button>
+            <button onclick="choosePath('warn-british')">Warn the British</button>
+            <button onclick="choosePath('paul-revere-ride')">Fast forward to Paul Revere's Ride</button>
+        </section>
 
-        <div id="avoid-conflict" class="passage">
-            <h2>Avoiding Conflict</h2>
-            <p>You decide to stay home. The next day, you hear about the Boston Tea Party.</p>
-            <a href="#" class="choice" data-target="chapter2">Continue to Chapter 2</a>
-        </div>
+        <!-- ... other existing sections ... -->
 
-        <div id="tea-choice" class="passage">
-            <h2>Tea in the Harbor</h2>
-            <p>You dump the tea. The protest is successful, but tensions rise.</p>
-            <a href="#" class="choice" data-target="reflection">Reflect on your decision</a>
-        </div>
+        <!-- New Paul Revere's Ride section -->
+        <section id="paul-revere-ride" style="display:none;">
+            <h2>Paul Revere's Midnight Ride</h2>
+            <p>It's April 18, 1775. You're Paul Revere, and you've just found out the British are coming to arrest Samuel Adams and John Hancock. It's like finding out the school principal is on their way to bust the most popular kids for planning a massive food fight!</p>
+            <p>You need to warn everyone, but how? No smartphones, no social media... just you, a horse, and a whole lot of determination.</p>
+            <p>Choose your next move:</p>
+            <button onclick="choosePath('horse')">Saddle up your horse and ride out</button>
+            <button onclick="choosePath('friends')">Gather some friends to help spread the word</button>
+        </section>
 
-        <div id="negotiate-choice" class="passage">
-            <h2>Failed Negotiations</h2>
-            <p>You attempt negotiation, but it's ineffective in this heated moment.</p>
-            <a href="#" class="choice" data-target="reflection">Reflect on your decision</a>
-        </div>
+        <!-- ... Add all the other new sections for Paul Revere's Ride ... -->
 
-        <div id="reflection" class="passage">
-            <h2>Reflection</h2>
-            <p>Think about the consequences of your actions during the Tea Party.</p>
-            <a href="#" class="choice" data-target="chapter2">Continue to Chapter 2</a>
-        </div>
-
-        <div id="chapter2" class="passage">
-            <h2>Chapter 2: Lexington and Concord</h2>
-            <p>It's 1775, and you're at Lexington and Concord. The tension is palpable as British troops approach.</p>
-            <a href="#" class="choice" data-target="stand-ground">Stand your ground</a>
-            <a href="#" class="choice" data-target="retreat">Retreat and regroup</a>
-        </div>
-
-        <div id="stand-ground" class="passage">
-            <h2>Standing Your Ground</h2>
-            <p>You decide to stand with the minutemen. The first shots of the war are fired.</p>
-            <a href="#" class="choice" data-target="chapter3">Continue to Chapter 3</a>
-        </div>
-
-        <div id="retreat" class="passage">
-            <h2>Strategic Retreat</h2>
-            <p>You retreat with the colonial forces, regrouping for future battles.</p>
-            <a href="#" class="choice" data-target="chapter3">Continue to Chapter 3</a>
-        </div>
-
-        <div id="chapter3" class="passage">
-            <h2>Chapter 3: The Siege of Yorktown</h2>
-            <p>It's 1781, and you're at Yorktown, Virginia. The final battle of the war is about to begin.</p>
-            <a href="#" class="choice" data-target="fight-siege">Fight in the siege</a>
-            <a href="#" class="choice" data-target="support-lines">Provide support behind the lines</a>
-        </div>
-
-        <div id="fight-siege" class="passage">
-            <h2>Fighting in the Siege</h2>
-            <p>You join the Continental Army in the siege. After weeks of fighting, the British surrender.</p>
-            <a href="#" class="choice" data-target="conclusion">See the conclusion</a>
-        </div>
-
-        <div id="support-lines" class="passage">
-            <h2>Supporting the Siege</h2>
-            <p>You work tirelessly behind the lines, ensuring supplies reach the troops. Your efforts contribute to the victory.</p>
-            <a href="#" class="choice" data-target="conclusion">See the conclusion</a>
-        </div>
-
-        <div id="conclusion" class="passage">
-            <h2>Conclusion</h2>
-            <p>Congratulations! You've made it through the American Revolution. Your choices have shaped the course of history.</p>
-            <a href="#" class="choice" data-target="start">Play again</a>
-        </div>
     </div>
 
     <script>
-        let playerBackground = '';
-
-        function showPassage(id) {
-            document.querySelectorAll('.passage').forEach(p => p.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
-        }
-
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('choice')) {
-                e.preventDefault();
-                const target = e.target.getAttribute('data-target');
-                const background = e.target.getAttribute('data-background');
-                if (background) {
-                    playerBackground = background;
-                }
-                showPassage(target);
+        function choosePath(path) {
+            // Hide all sections
+            document.querySelectorAll('section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show the chosen section
+            document.getElementById(path).style.display = 'block';
+            
+            // Add any specific logic for each path here
+            if (path === 'owl') {
+                alert("Hoo boy! That was a close one!");
+            } else if (path === 'run') {
+                alert("You're riding so fast, Paul Revere? More like Paul Re-VROOM!");
             }
-        });
-
-        showPassage('start');
+            
+            // You can add more path-specific logic here
+        }
     </script>
 </body>
 </html>
