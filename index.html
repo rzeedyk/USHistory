@@ -110,9 +110,26 @@
                 section.style.display = 'none';
             });
             
-            // Special case for start journey
-            if (path === 'start_journey') {
-                path = 'boston_tea_party';
+            // Special cases
+            const specialCases = {
+                'start_journey': 'boston_tea_party',
+                'fast_forward_revere': 'paul_revere_ride',
+                'escape_scene': 'paul_revere_ride',
+                'encourage_others': 'paul_revere_ride',
+                'join_british': 'paul_revere_ride',
+                'regret_decision': 'join_tea_party',
+                'saddle_up': 'battle_trenton',
+                'gather_friends': 'battle_trenton',
+                'life_liberty': 'battle_trenton',
+                'we_people': 'battle_trenton',
+                'inspire_troops': 'valley_forge',
+                'focus_crossing': 'valley_forge',
+                'improve_conditions': 'declaration_independence',
+                'train_troops': 'declaration_independence'
+            };
+            
+            if (specialCases[path]) {
+                path = specialCases[path];
             }
             
             // Show the chosen section
@@ -125,22 +142,19 @@
             }
             
             // Add any specific logic for each path here
-            if (path === 'owl') {
-                alert("Hoo boy! That was a close one!");
-            } else if (path === 'run') {
-                alert("You're riding so fast, Paul Revere? More like Paul Re-VROOM!");
-            } else if (path === 'support-franklin') {
-                alert("Franklin beams at you like you just invented electricity together!");
-            } else if (path === 'new-suggestion') {
-                alert("The room falls silent, all eyes on you. No pressure!");
-            } else if (path === 'inspire-troops') {
-                alert("Your speech would make Hamilton's rap battles look amateur!");
-            } else if (path === 'focus-crossing') {
-                alert("You're so focused, you could probably walk on water... unlike these boats.");
-            } else if (path === 'improve-conditions') {
-                alert("Your home improvement skills would put any HGTV show to shame!");
-            } else if (path === 'train-troops') {
-                alert("You're whipping these troops into shape faster than you can say 'Lafayette, we are here!'");
+            const pathAlerts = {
+                'owl': "Hoo boy! That was a close one!",
+                'run': "You're riding so fast, Paul Revere? More like Paul Re-VROOM!",
+                'support_franklin': "Franklin beams at you like you just invented electricity together!",
+                'new_suggestion': "The room falls silent, all eyes on you. No pressure!",
+                'inspire_troops': "Your speech would make Hamilton's rap battles look amateur!",
+                'focus_crossing': "You're so focused, you could probably walk on water... unlike these boats.",
+                'improve_conditions': "Your home improvement skills would put any HGTV show to shame!",
+                'train_troops': "You're whipping these troops into shape faster than you can say 'Lafayette, we are here!'"
+            };
+            
+            if (pathAlerts[path]) {
+                alert(pathAlerts[path]);
             }
         }
 
