@@ -28,7 +28,7 @@
         button:hover {
             background-color: #003a6c;
         }
-        #resource-display, #skills-display {
+        #resource-display, #skills-display, #relationships-display {
             background-color: #f0f0f0;
             padding: 10px;
             margin-bottom: 20px;
@@ -37,6 +37,11 @@
         .disabled {
             opacity: 0.5;
             cursor: not-allowed;
+        }
+        #mini-game-container {
+            border: 2px solid #005a9c;
+            padding: 10px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -54,6 +59,12 @@
             <p>Diplomacy: <span id="diplomacy-skill">1</span> | 
                Military: <span id="military-skill">1</span> | 
                Espionage: <span id="espionage-skill">1</span></p>
+        </div>
+
+        <div id="relationships-display">
+            <p>Washington: <span id="washington-relation">0</span> | 
+               Franklin: <span id="franklin-relation">0</span> | 
+               Jefferson: <span id="jefferson-relation">0</span></p>
         </div>
 
         <section id="start">
@@ -133,6 +144,27 @@
             <button id="boost-morale">Boost morale through training and activities</button>
         </section>
 
+        <section id="french_alliance" style="display:none;">
+            <h2>Securing French Alliance</h2>
+            <p>It's 1778, and you've been sent to France to secure their support. Benjamin Franklin is already there, charming the French court with his wit and inventions.</p>
+            <p>How will you contribute to the diplomatic efforts?</p>
+            <button id="host-dinner">Host a lavish dinner for French nobles</button>
+            <button id="appeal-to-king">Make a direct appeal to King Louis XVI</button>
+            <button id="work-with-franklin">Collaborate closely with Franklin</button>
+        </section>
+
+        <section id="battle_strategy" style="display:none;">
+            <h2>Battle Strategy Mini-Game</h2>
+            <p>General Washington needs your help to plan the next battle. Use your resources wisely!</p>
+            <div id="mini-game-container"></div>
+        </section>
+
+        <section id="spy_network" style="display:none;">
+            <h2>Building a Spy Network</h2>
+            <p>The British have spies everywhere. It's time to build our own network to gather crucial intelligence.</p>
+            <div id="mini-game-container"></div>
+        </section>
+
         <section id="game_end" style="display:none;">
             <h2>The Birth of a Nation</h2>
             <p>Congratulations! You've made it through the American Revolution. Your choices have shaped the course of history.</p>
@@ -154,6 +186,11 @@
             military: 1,
             espionage: 1
         };
+        let relationships = {
+            washington: 0,
+            franklin: 0,
+            jefferson: 0
+        };
         let playerBackground = '';
 
         function updateResources(troopChange, supplyChange, fundingChange) {
@@ -174,6 +211,16 @@
             document.getElementById('diplomacy-skill').textContent = skills.diplomacy;
             document.getElementById('military-skill').textContent = skills.military;
             document.getElementById('espionage-skill').textContent = skills.espionage;
+        }
+
+        function updateRelationships(washingtonChange, franklinChange, jeffersonChange) {
+            relationships.washington += washingtonChange;
+            relationships.franklin += franklinChange;
+            relationships.jefferson += jeffersonChange;
+            
+            document.getElementById('washington-relation').textContent = relationships.washington;
+            document.getElementById('franklin-relation').textContent = relationships.franklin;
+            document.getElementById('jefferson-relation').textContent = relationships.jefferson;
         }
 
         function choosePath(path) {
@@ -207,9 +254,15 @@
                 'lead_troops': { nextPath: 'valley_forge', score: 5, resources: [-20, -10, 0], skills: [0, 2, 0], message: "Your leadership inspires the troops to victory!" },
                 'spy_mission': { nextPath: 'valley_forge', score: 4, resources: [-5, -5, -10], skills: [0, 0, 2], message: "Your intel proves crucial to the battle's success." },
                 'assist_crossing': { nextPath: 'valley_forge', score: 3, resources: [-10, -15, -5], skills: [1, 1, 0], message: "Your organizational skills ensure a smooth operation." },
-                'improve_shelter': { nextPath: 'game_end', score: 4, resources: [-10, -20, -10], skills: [1, 1, 0], message: "You've significantly improved living conditions at Valley Forge." },
-                'forage_food': { nextPath: 'game_end', score: 3, resources: [-5, 20, -5], skills: [0, 1, 1], message: "Your efforts have helped stave off hunger in the camp." },
-                'boost_morale': { nextPath: 'game_end', score: 5, resources: [-5, -10, -5], skills: [2, 1, 0], message: "The troops' spirits are high thanks to your initiatives!" }
+                'improve_shelter': { nextPath: 'french_alliance', score: 4, resources: [-10, -20, -10], skills: [1, 1, 0], message: "You've significantly improved living conditions at Valley Forge." },
+                'forage_food': { nextPath: 'french_alliance', score: 3, resources: [-5, 20, -5], skills: [0, 1, 1], message: "Your efforts have helped stave off hunger in the camp." },
+                'boost_morale': { nextPath: 'french_alliance', score: 5, resources: [-5, -10, -5], skills: [2, 1, 0], message: "The troops' spirits are high thanks to your initiatives!" },
+                'host_dinner': { nextPath: 'battle_strategy', score: 3, resources: [0, -10, -20], skills: [1, 0, 0], relationships: [0, 1, 0], 
+                                 message: "Your dinner impresses the French nobles, but it's costly." },
+                'appeal_to_king': { nextPath: 'battle_strategy', score: 5, resources: [0, 0, -10], skills: [2, 0, 0], relationships: [0, 0, 1], 
+                                    message: "King Louis XVI is receptive to your appeal!" },
+                'work_with_franklin': { nextPath: 'battle_strategy', score: 4, resources: [0, -5, -5], skills: [1, 0, 1], relationships: [0, 2, 0], 
+                                        message: "You and Franklin make a great team, securing French support." }
             };
             
             if (pathActions[path]) {
@@ -221,19 +274,105 @@
                 playerScore += action.score;
                 updateResources(...action.resources);
                 updateSkills(...action.skills);
+                if (action.relationships) {
+                    updateRelationships(...action.relationships);
+                }
                 if (action.message) {
                     alert(action.message + "\nYour current score: " + playerScore);
                 }
                 const targetSection = document.getElementById(action.nextPath);
                 if (targetSection) {
                     targetSection.style.display = 'block';
-                    if (action.nextPath === 'game_end') {
+                    if (action.nextPath === 'battle_strategy') {
+                        initBattleStrategy();
+                    } else if (action.nextPath === 'spy_network') {
+                        initSpyNetwork();
+                    } else if (action.nextPath === 'game_end') {
                         endGame();
                     }
                 } else {
                     console.error("Could not find section with id:", action.nextPath);
                 }
             }
+        }
+
+        function initBattleStrategy() {
+            const container = document.getElementById('mini-game-container');
+            container.innerHTML = `
+                <p>Allocate your resources to win the battle:</p>
+                <button onclick="allocateResources('troops')">Use Troops (${resources.troops})</button>
+                <button onclick="allocateResources('supplies')">Use Supplies (${resources.supplies})</button>
+                <button onclick="allocateResources('funding')">Use Funding (${resources.funding})</button>
+                <p id="battle-result"></p>
+            `;
+        }
+
+        function allocateResources(type) {
+            const amount = Math.min(resources[type], 50);
+            resources[type] -= amount;
+            updateResources(0, 0, 0); // This will update the display
+            const success = Math.random() < (amount / 100 + skills.military / 10);
+            const resultElement = document.getElementById('battle-result');
+            if (success) {
+                resultElement.textContent = "Victory! Your strategy was successful.";
+                playerScore += 5;
+                updateSkills(0, 1, 0);
+                updateRelationships(2, 0, 0);
+            } else {
+                resultElement.textContent = "Defeat. Your strategy didn't work out this time.";
+                updateRelationships(-1, 0, 0);
+            }
+            setTimeout(() => choosePath('spy_network'), 2000);
+        }
+
+        function initSpyNetwork() {
+            const container = document.getElementById('mini-game-container');
+            container.innerHTML = `
+                <p>Choose your spying method:</p>
+                <button onclick="conductEspionage('bribe')">Bribe Officials (Cost: 20 Funding)</button>
+                <button onclick="conductEspionage('infiltrate')">Infiltrate Enemy Ranks (Cost: 10 Troops)</button>
+                <button onclick="conductEspionage('codebreak')">Intercept and Decode Messages (No cost)</button>
+                <p id="espionage-result"></p>
+            `;
+        }
+
+        function conductEspionage(method) {
+            let success = false;
+            const resultElement = document.getElementById('espionage-result');
+            switch(method) {
+                case 'bribe':
+                    if (resources.funding >= 20) {
+                        resources.funding -= 20;
+                        success = Math.random() < (0.6 + skills.espionage / 20);
+                    } else {
+                        resultElement.textContent = "Not enough funding!";
+                        return;
+                    }
+                    break;
+                case 'infiltrate':
+                    if (resources.troops >= 10) {
+                        resources.troops -= 10;
+                        success = Math.random() < (0.5 + skills.military / 20);
+                    } else {
+                        resultElement.textContent = "Not enough troops!";
+                        return;
+                    }
+                    break;
+                case 'codebreak':
+                    success = Math.random() < (0.4 + skills.espionage / 10);
+                    break;
+            }
+            updateResources(0, 0, 0); // Update display
+            if (success) {
+                resultElement.textContent = "Success! You've gathered valuable intelligence.";
+                playerScore += 5;
+                updateSkills(0, 0, 1);
+                updateRelationships(1, 0, 0);
+            } else {
+                resultElement.textContent = "Your espionage attempt failed, but you gained experience.";
+                updateSkills(0, 0, 1);
+            }
+            setTimeout(() => choosePath('game_end'), 2000);
         }
 
         function endGame() {
@@ -248,6 +387,7 @@
             } else {
                 endMessage = "You've survived the revolution, but your impact was limited.";
             }
+            endMessage += `\n\nFinal Relationships:\nWashington: ${relationships.washington}\nFranklin: ${relationships.franklin}\nJefferson: ${relationships.jefferson}`;
             document.getElementById('end-message').textContent = endMessage;
         }
 
