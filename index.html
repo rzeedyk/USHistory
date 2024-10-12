@@ -40,7 +40,7 @@
             <button id="start-journey">Start your journey</button>
         </section>
 
-        <section id="boston-tea-party" style="display:none;">
+        <section id="boston_tea_party" style="display:none;">
             <h2>The Boston Tea Party</h2>
             <p>It's December 16, 1773. You find yourself in Boston Harbor, where tensions are high due to unfair taxation. A group of colonists are planning to dump British tea into the harbor as a form of protest.</p>
             <p>What do you choose to do?</p>
@@ -49,7 +49,7 @@
             <button id="fast-forward-revere">Fast forward to Paul Revere's Ride</button>
         </section>
 
-        <section id="join-tea-party" style="display:none;">
+        <section id="join_tea_party" style="display:none;">
             <h2>Joining the Boston Tea Party</h2>
             <p>You decide to join the protesters. Disguised as a Mohawk Indian, you board the ship and start throwing tea overboard. The splash of the tea crates hitting the water is oddly satisfying.</p>
             <p>What's your next move?</p>
@@ -57,7 +57,7 @@
             <button id="encourage-others">Encourage others to join</button>
         </section>
 
-        <section id="warn-british" style="display:none;">
+        <section id="warn_british" style="display:none;">
             <h2>Warning the British</h2>
             <p>You rush to warn the British about the impending protest. They appreciate the information but seem unsure how to respond. Your loyalist leanings may have consequences...</p>
             <p>What will you do now?</p>
@@ -65,7 +65,7 @@
             <button id="regret-decision">Regret your decision and join the protesters</button>
         </section>
 
-        <section id="paul-revere-ride" style="display:none;">
+        <section id="paul_revere_ride" style="display:none;">
             <h2>Paul Revere's Midnight Ride</h2>
             <p>It's April 18, 1775. You're Paul Revere, and you've just found out the British are coming to arrest Samuel Adams and John Hancock. It's like finding out the school principal is on their way to bust the most popular kids for planning a massive food fight!</p>
             <p>You need to warn everyone, but how? No smartphones, no social media... just you, a horse, and a whole lot of determination.</p>
@@ -74,7 +74,7 @@
             <button id="gather-friends">Gather some friends to help spread the word</button>
         </section>
 
-        <section id="declaration-independence" style="display:none;">
+        <section id="declaration_independence" style="display:none;">
             <h2>The Declaration of Independence</h2>
             <p>It's the summer of 1776 in Philadelphia. The Continental Congress is meeting, and there's more drama than a season finale of "Stranger Things." You're part of the committee tasked with drafting the Declaration of Independence.</p>
             <p>Thomas Jefferson is hunched over his desk, quill in hand, looking like he's about to drop the hottest track of 1776. But he's stuck on the opening lines.</p>
@@ -83,7 +83,7 @@
             <button id="we-people">Propose "We the People..."</button>
         </section>
 
-        <section id="battle-trenton" style="display:none;">
+        <section id="battle_trenton" style="display:none;">
             <h2>The Battle of Trenton</h2>
             <p>It's December 25, 1776. General Washington has a daring plan to cross the Delaware River and surprise the Hessian forces in Trenton. It's so cold, you feel like you're in an episode of "Game of Thrones" - winter is definitely coming!</p>
             <p>As you prepare to cross the icy river, you overhear soldiers discussing their doubts. What do you do?</p>
@@ -91,7 +91,7 @@
             <button id="focus-crossing">Focus on helping with the river crossing</button>
         </section>
 
-        <section id="valley-forge" style="display:none;">
+        <section id="valley_forge" style="display:none;">
             <h2>Valley Forge</h2>
             <p>It's the winter of 1777-1778, and you're at Valley Forge with Washington's army. The conditions are brutal - it's colder than a White Walker's handshake, and supplies are scarcer than toilet paper in a pandemic.</p>
             <p>Morale is low, and soldiers are considering desertion. What action do you take?</p>
@@ -104,13 +104,20 @@
     <script>
         function choosePath(path) {
             console.log("choosePath called with path:", path);
+            
             // Hide all sections
             document.querySelectorAll('section').forEach(section => {
                 section.style.display = 'none';
             });
             
             // Show the chosen section
-            document.getElementById(path).style.display = 'block';
+            const targetSection = document.getElementById(path);
+            console.log("Target section:", targetSection);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            } else {
+                console.error("Could not find section with id:", path);
+            }
             
             // Add any specific logic for each path here
             if (path === 'owl') {
@@ -137,6 +144,7 @@
             buttons.forEach(button => {
                 button.addEventListener('click', function() {
                     const path = this.id.replace('-', '_');
+                    console.log("Button clicked, path:", path);
                     choosePath(path);
                 });
             });
