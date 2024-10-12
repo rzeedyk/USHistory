@@ -110,6 +110,11 @@
                 section.style.display = 'none';
             });
             
+            // Special case for start journey
+            if (path === 'start_journey') {
+                path = 'boston_tea_party';
+            }
+            
             // Show the chosen section
             const targetSection = document.getElementById(path);
             console.log("Target section:", targetSection);
@@ -143,7 +148,7 @@
             const buttons = document.querySelectorAll('button');
             buttons.forEach(button => {
                 button.addEventListener('click', function() {
-                    const path = this.id.replace('-', '_');
+                    const path = this.id.replace(/-/g, '_');
                     console.log("Button clicked, path:", path);
                     choosePath(path);
                 });
