@@ -322,7 +322,11 @@
                 resultElement.textContent = "Defeat. Your strategy didn't work out this time.";
                 updateRelationships(-1, 0, 0);
             }
-            setTimeout(() => choosePath('spy_network'), 2000);
+            setTimeout(() => {
+                document.getElementById('battle_strategy').style.display = 'none';
+                initSpyNetwork();
+                document.getElementById('spy_network').style.display = 'block';
+            }, 2000);
         }
 
         function initSpyNetwork() {
@@ -372,7 +376,11 @@
                 resultElement.textContent = "Your espionage attempt failed, but you gained experience.";
                 updateSkills(0, 0, 1);
             }
-            setTimeout(() => choosePath('game_end'), 2000);
+            setTimeout(() => {
+                document.getElementById('spy_network').style.display = 'none';
+                endGame();
+                document.getElementById('game_end').style.display = 'block';
+            }, 2000);
         }
 
         function endGame() {
