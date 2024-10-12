@@ -37,32 +37,32 @@
         <section id="start">
             <h2>Welcome to the American Revolution</h2>
             <p>You are about to embark on a journey through one of the most pivotal periods in American history. Your choices will shape the course of events. Are you ready to make history?</p>
-            <button onclick="choosePath('boston-tea-party')">Start your journey</button>
+            <button id="start-journey">Start your journey</button>
         </section>
 
         <section id="boston-tea-party" style="display:none;">
             <h2>The Boston Tea Party</h2>
             <p>It's December 16, 1773. You find yourself in Boston Harbor, where tensions are high due to unfair taxation. A group of colonists are planning to dump British tea into the harbor as a form of protest.</p>
             <p>What do you choose to do?</p>
-            <button onclick="choosePath('join-tea-party')">Join the Tea Party</button>
-            <button onclick="choosePath('warn-british')">Warn the British</button>
-            <button onclick="choosePath('paul-revere-ride')">Fast forward to Paul Revere's Ride</button>
+            <button id="join-tea-party">Join the Tea Party</button>
+            <button id="warn-british">Warn the British</button>
+            <button id="fast-forward-revere">Fast forward to Paul Revere's Ride</button>
         </section>
 
         <section id="join-tea-party" style="display:none;">
             <h2>Joining the Boston Tea Party</h2>
             <p>You decide to join the protesters. Disguised as a Mohawk Indian, you board the ship and start throwing tea overboard. The splash of the tea crates hitting the water is oddly satisfying.</p>
             <p>What's your next move?</p>
-            <button onclick="choosePath('escape-scene')">Try to escape the scene</button>
-            <button onclick="choosePath('encourage-others')">Encourage others to join</button>
+            <button id="escape-scene">Try to escape the scene</button>
+            <button id="encourage-others">Encourage others to join</button>
         </section>
 
         <section id="warn-british" style="display:none;">
             <h2>Warning the British</h2>
             <p>You rush to warn the British about the impending protest. They appreciate the information but seem unsure how to respond. Your loyalist leanings may have consequences...</p>
             <p>What will you do now?</p>
-            <button onclick="choosePath('join-british')">Offer to help the British</button>
-            <button onclick="choosePath('regret-decision')">Regret your decision and join the protesters</button>
+            <button id="join-british">Offer to help the British</button>
+            <button id="regret-decision">Regret your decision and join the protesters</button>
         </section>
 
         <section id="paul-revere-ride" style="display:none;">
@@ -70,56 +70,8 @@
             <p>It's April 18, 1775. You're Paul Revere, and you've just found out the British are coming to arrest Samuel Adams and John Hancock. It's like finding out the school principal is on their way to bust the most popular kids for planning a massive food fight!</p>
             <p>You need to warn everyone, but how? No smartphones, no social media... just you, a horse, and a whole lot of determination.</p>
             <p>Choose your next move:</p>
-            <button onclick="choosePath('horse')">Saddle up your horse and ride out</button>
-            <button onclick="choosePath('friends')">Gather some friends to help spread the word</button>
-        </section>
-
-        <section id="horse" style="display:none;">
-            <h2>The Midnight Ride Begins!</h2>
-            <p>You jump on your horse faster than you've ever moved in your life. As you gallop through the dark streets, you realize something shocking - you're basically the colonial version of a group text!</p>
-            <p>But uh-oh, you spot some British soldiers up ahead. What do you do?</p>
-            <button onclick="choosePath('stealth')">Try to sneak past them quietly</button>
-            <button onclick="choosePath('yell')">Yell "The British are coming!" at the top of your lungs</button>
-        </section>
-
-        <section id="friends" style="display:none;">
-            <h2>Teamwork Makes the Dream Work</h2>
-            <p>You gather your crew faster than assembling a squad for dodgeball. Your friend William Dawes joins you, and you split up to cover more ground.</p>
-            <p>As you ride, you come across a group of teenagers having a secret bonfire. Do you:</p>
-            <button onclick="choosePath('recruit')">Try to recruit them to help spread the word</button>
-            <button onclick="choosePath('ignore')">Ignore them and keep riding</button>
-        </section>
-
-        <section id="stealth" style="display:none;">
-            <h2>Stealth Mode: Activated</h2>
-            <p>You try to sneak past the British soldiers, your heart pounding louder than your horse's hooves. Suddenly, your horse sneezes! The soldiers look around, confused.</p>
-            <p>Quick! What's your excuse?</p>
-            <button onclick="choosePath('owl')">Pretend to be a really loud owl</button>
-            <button onclick="choosePath('run')">Abandon stealth and make a run for it</button>
-        </section>
-
-        <section id="yell" style="display:none;">
-            <h2>The Loudest Town Crier</h2>
-            <p>You shout "The British are coming!" so loud that you're pretty sure they heard you back in England. The soldiers are startled, and chaos erupts!</p>
-            <p>People start pouring out of their houses, some in nightgowns and silly caps. It's like a midnight pajama party, but with more panic and patriotism.</p>
-            <p>What's your next move, Paul?</p>
-            <button onclick="choosePath('continue-ride')">Keep riding to the next town</button>
-            <button onclick="choosePath('organize')">Stay and help organize the local militia</button>
-        </section>
-
-        <section id="paul-revere-ride-conclusion" style="display:none;">
-            <h2>The Ride Concludes</h2>
-            <p>Your midnight ride has successfully warned the colonists. The British plan has been foiled, and the Revolutionary War is about to begin.</p>
-            <p>Your actions have set the stage for the birth of a new nation. What's your next move?</p>
-            <button onclick="choosePath('after-revere-ride')">Continue to the summer of 1776</button>
-        </section>
-
-        <section id="after-revere-ride" style="display:none;">
-            <h2>The Colonies at a Crossroads</h2>
-            <p>Your midnight ride has warned the colonists, and tensions with Britain are at an all-time high. As the summer of 1776 approaches, colonial leaders are gathering in Philadelphia to decide the future of the colonies.</p>
-            <p>You have the chance to be part of history. What will you do?</p>
-            <button onclick="choosePath('declaration-independence')">Join the Continental Congress in Philadelphia</button>
-            <button onclick="choosePath('join-army')">Join the Continental Army</button>
+            <button id="saddle-up">Saddle up your horse and ride out</button>
+            <button id="gather-friends">Gather some friends to help spread the word</button>
         </section>
 
         <section id="declaration-independence" style="display:none;">
@@ -127,79 +79,31 @@
             <p>It's the summer of 1776 in Philadelphia. The Continental Congress is meeting, and there's more drama than a season finale of "Stranger Things." You're part of the committee tasked with drafting the Declaration of Independence.</p>
             <p>Thomas Jefferson is hunched over his desk, quill in hand, looking like he's about to drop the hottest track of 1776. But he's stuck on the opening lines.</p>
             <p>Jefferson turns to you and asks, "How should we start this revolutionary document?"</p>
-            <button onclick="choosePath('life-liberty')">Suggest "Life, Liberty, and the pursuit of Happiness"</button>
-            <button onclick="choosePath('we-people')">Propose "We the People..."</button>
-        </section>
-
-        <section id="life-liberty" style="display:none;">
-            <h2>Life, Liberty, and the Pursuit of Happiness</h2>
-            <p>Jefferson's eyes light up like he just got the latest iPhone (if iPhones existed in 1776). "That's perfect!" he exclaims.</p>
-            <p>As the committee works on the document, John Adams bursts in. "The British are sending more troops!" he shouts. "We need to decide: do we ask for full independence now, or try one last time for peace?"</p>
-            <button onclick="choosePath('full-independence')">Vote for full independence</button>
-            <button onclick="choosePath('peace-attempt')">Suggest one last peace attempt</button>
-        </section>
-
-        <section id="we-people" style="display:none;">
-            <h2>We the People...</h2>
-            <p>Jefferson scratches his head, looking more confused than a cat watching a magic trick. "That sounds more like the opening for a constitution," he says. "But let's keep it in mind for later!"</p>
-            <p>Suddenly, Benjamin Franklin rushes in, his kite and key forgotten in the excitement. "I've got it!" he shouts. "What if we start with 'When in the course of human events...'"</p>
-            <p>The room buzzes with excitement. What do you think?</p>
-            <button onclick="choosePath('support-franklin')">Support Franklin's idea</button>
-            <button onclick="choosePath('new-suggestion')">Suggest a different opening</button>
+            <button id="life-liberty">Suggest "Life, Liberty, and the pursuit of Happiness"</button>
+            <button id="we-people">Propose "We the People..."</button>
         </section>
 
         <section id="battle-trenton" style="display:none;">
             <h2>The Battle of Trenton</h2>
             <p>It's December 25, 1776. General Washington has a daring plan to cross the Delaware River and surprise the Hessian forces in Trenton. It's so cold, you feel like you're in an episode of "Game of Thrones" - winter is definitely coming!</p>
             <p>As you prepare to cross the icy river, you overhear soldiers discussing their doubts. What do you do?</p>
-            <button onclick="choosePath('inspire-troops')">Try to inspire the troops with a rousing speech</button>
-            <button onclick="choosePath('focus-crossing')">Focus on helping with the river crossing</button>
-        </section>
-
-        <section id="inspire-troops" style="display:none;">
-            <h2>Inspiring the Troops</h2>
-            <p>You channel your inner Captain America and deliver a speech that would make even the Avengers proud. The soldiers' spirits are lifted, and they're ready to face whatever comes their way.</p>
-            <p>As you near Trenton, Washington turns to you and asks for your opinion on the attack strategy. What do you suggest?</p>
-            <button onclick="choosePath('frontal-assault')">Suggest a frontal assault</button>
-            <button onclick="choosePath('stealth-approach')">Propose a stealthy approach</button>
-        </section>
-
-        <section id="focus-crossing" style="display:none;">
-            <h2>Crossing the Delaware</h2>
-            <p>You focus on helping with the treacherous river crossing. It's like the world's most dangerous game of "Don't Rock the Boat," but your efforts help keep spirits high and everyone safe.</p>
-            <p>As you reach the other side, you notice a small Hessian patrol. Do you:</p>
-            <button onclick="choosePath('alert-washington')">Quietly alert Washington</button>
-            <button onclick="choosePath('ambush-patrol')">Suggest ambushing the patrol</button>
+            <button id="inspire-troops">Try to inspire the troops with a rousing speech</button>
+            <button id="focus-crossing">Focus on helping with the river crossing</button>
         </section>
 
         <section id="valley-forge" style="display:none;">
             <h2>Valley Forge</h2>
             <p>It's the winter of 1777-1778, and you're at Valley Forge with Washington's army. The conditions are brutal - it's colder than a White Walker's handshake, and supplies are scarcer than toilet paper in a pandemic.</p>
             <p>Morale is low, and soldiers are considering desertion. What action do you take?</p>
-            <button onclick="choosePath('improve-conditions')">Work on improving camp conditions</button>
-            <button onclick="choosePath('train-troops')">Help Baron von Steuben train the troops</button>
-        </section>
-
-        <section id="improve-conditions" style="display:none;">
-            <h2>Improving Valley Forge</h2>
-            <p>You channel your inner Bob the Builder and start working on improving the camp. Your efforts help create better shelters and sanitation, boosting morale like a well-timed Tik Tok dance.</p>
-            <p>Your actions catch Washington's eye. He asks for your input on the next steps. What do you suggest?</p>
-            <button onclick="choosePath('send-foraging-parties')">Organize foraging parties for supplies</button>
-            <button onclick="choosePath('diplomatic-mission')">Volunteer for a diplomatic mission to secure more aid</button>
-        </section>
-
-        <section id="train-troops" style="display:none;">
-            <h2>Training with von Steuben</h2>
-            <p>You join Baron von Steuben in training the troops. It's like a revolutionary boot camp, complete with fancy European drilling techniques and some colorful German swear words.</p>
-            <p>As the army's discipline improves, you wonder about the next move. What do you propose to Washington?</p>
-            <button onclick="choosePath('prepare-offensive')">Suggest preparing for a spring offensive</button>
-            <button onclick="choosePath('focus-guerrilla')">Propose focusing on guerrilla tactics</button>
+            <button id="improve-conditions">Work on improving camp conditions</button>
+            <button id="train-troops">Help Baron von Steuben train the troops</button>
         </section>
 
     </div>
 
     <script>
         function choosePath(path) {
+            console.log("choosePath called with path:", path);
             // Hide all sections
             document.querySelectorAll('section').forEach(section => {
                 section.style.display = 'none';
@@ -224,10 +128,19 @@
             } else if (path === 'improve-conditions') {
                 alert("Your home improvement skills would put any HGTV show to shame!");
             } else if (path === 'train-troops') {
-                alert("You're whipping these troops into shape
-                      alert("You're whipping these troops into shape faster than you can say 'Lafayette, we are here!'");
+                alert("You're whipping these troops into shape faster than you can say 'Lafayette, we are here!'");
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const path = this.id.replace('-', '_');
+                    choosePath(path);
+                });
+            });
+        });
     </script>
 </body>
 </html>
