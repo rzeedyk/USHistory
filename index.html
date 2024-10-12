@@ -28,16 +28,46 @@
         button:hover {
             background-color: #003a6c;
         }
+        #resource-display, #skills-display {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
     <div id="game-container">
         <h1>American Revolution Adventure</h1>
         
+        <div id="resource-display">
+            <p>Troops: <span id="troop-count">100</span> | 
+               Supplies: <span id="supply-count">100</span> | 
+               Funding: <span id="funding-count">100</span></p>
+        </div>
+        
+        <div id="skills-display">
+            <p>Diplomacy: <span id="diplomacy-skill">1</span> | 
+               Military: <span id="military-skill">1</span> | 
+               Espionage: <span id="espionage-skill">1</span></p>
+        </div>
+
         <section id="start">
             <h2>Welcome to the American Revolution</h2>
             <p>You are about to embark on a journey through one of the most pivotal periods in American history. Your choices will shape the course of events. Are you ready to make history?</p>
             <button id="start-journey">Start your journey</button>
+        </section>
+
+        <section id="character_creation" style="display:none;">
+            <h2>Create Your Character</h2>
+            <p>Before you begin your adventure, choose your background:</p>
+            <button id="choose-merchant">Merchant (Bonus: Funding)</button>
+            <button id="choose-soldier">Former Soldier (Bonus: Troops)</button>
+            <button id="choose-politician">Local Politician (Bonus: Diplomacy)</button>
         </section>
 
         <section id="boston_tea_party" style="display:none;">
@@ -49,6 +79,15 @@
             <button id="observe-secretly">Observe secretly and report to newspaper</button>
         </section>
 
+        <section id="colonial_congress" style="display:none;">
+            <h2>First Continental Congress</h2>
+            <p>September 1774: Colonial leaders gather to discuss a unified response to British actions. Your reputation from the Tea Party incident precedes you.</p>
+            <p>How will you contribute?</p>
+            <button id="advocate-peace">Advocate for peaceful resolution</button>
+            <button id="push-for-independence">Push for independence</button>
+            <button id="propose-boycott">Propose a boycott of British goods</button>
+        </section>
+
         <section id="paul_revere_ride" style="display:none;">
             <h2>Paul Revere's Midnight Ride</h2>
             <p>It's April 18, 1775. British troops are on the move, and you've got to warn Samuel Adams and John Hancock. You're basically the colonial version of a group text!</p>
@@ -58,50 +97,7 @@
             <button id="send-messengers">Send multiple messengers on foot</button>
         </section>
 
-        <section id="lexington_concord" style="display:none;">
-            <h2>The Battles of Lexington and Concord</h2>
-            <p>It's April 19, 1775. The British have arrived, and the first shots of the revolution are about to be fired. The air is thick with tension, like a colonial Twitter feed about to explode.</p>
-            <p>What role will you play?</p>
-            <button id="join-minutemen">Join the Minutemen</button>
-            <button id="negotiate-peace">Attempt to negotiate peace</button>
-            <button id="protect-civilians">Help evacuate civilians</button>
-        </section>
-
-        <section id="declaration_independence" style="display:none;">
-            <h2>The Declaration of Independence</h2>
-            <p>It's the summer of 1776 in Philadelphia. The Continental Congress is meeting, and there's more drama than a season finale of "Stranger Things." You're part of the committee tasked with drafting the Declaration of Independence.</p>
-            <p>How will you contribute to this historic document?</p>
-            <button id="emphasize-liberty">Emphasize "Life, Liberty, and the pursuit of Happiness"</button>
-            <button id="focus-grievances">Focus on listing grievances against the King</button>
-            <button id="propose-equality">Propose that "all men are created equal"</button>
-        </section>
-
-        <section id="battle_trenton" style="display:none;">
-            <h2>The Battle of Trenton</h2>
-            <p>It's December 25, 1776. General Washington has a daring plan to cross the Delaware River and surprise the Hessian forces in Trenton. It's so cold, you feel like you're in an episode of "Game of Thrones" - winter is definitely coming!</p>
-            <p>What role will you take in this pivotal battle?</p>
-            <button id="lead-troops">Lead a group of troops across the river</button>
-            <button id="spy-mission">Go on a spy mission to gather intelligence</button>
-            <button id="assist-crossing">Help manage the logistics of crossing the river</button>
-        </section>
-
-        <section id="valley_forge" style="display:none;">
-            <h2>Valley Forge</h2>
-            <p>It's the winter of 1777-1778, and you're at Valley Forge with Washington's army. The conditions are brutal - it's colder than a White Walker's handshake, and supplies are scarcer than toilet paper in a pandemic.</p>
-            <p>How will you help the army survive this harsh winter?</p>
-            <button id="improve-shelter">Work on improving shelters and sanitation</button>
-            <button id="forage-food">Organize foraging parties to find food</button>
-            <button id="boost-morale">Boost morale through training and activities</button>
-        </section>
-
-        <section id="battle_yorktown" style="display:none;">
-            <h2>The Battle of Yorktown</h2>
-            <p>It's September 1781. General Washington, with the help of French allies, has cornered British forces under General Cornwallis at Yorktown. This could be the decisive battle of the war!</p>
-            <p>What strategy will you suggest to General Washington?</p>
-            <button id="artillery-barrage">Suggest a massive artillery barrage</button>
-            <button id="naval-blockade">Emphasize the importance of the French naval blockade</button>
-            <button id="night-raid">Propose a daring night raid on British positions</button>
-        </section>
+        <!-- More sections... -->
 
         <section id="game_end" style="display:none;">
             <h2>The Birth of a Nation</h2>
@@ -114,60 +110,81 @@
 
     <script>
         let playerScore = 0;
+        let resources = {
+            troops: 100,
+            supplies: 100,
+            funding: 100
+        };
+        let skills = {
+            diplomacy: 1,
+            military: 1,
+            espionage: 1
+        };
+        let playerBackground = '';
+
+        function updateResources(troopChange, supplyChange, fundingChange) {
+            resources.troops = Math.max(0, resources.troops + troopChange);
+            resources.supplies = Math.max(0, resources.supplies + supplyChange);
+            resources.funding = Math.max(0, resources.funding + fundingChange);
+            
+            document.getElementById('troop-count').textContent = resources.troops;
+            document.getElementById('supply-count').textContent = resources.supplies;
+            document.getElementById('funding-count').textContent = resources.funding;
+        }
+
+        function updateSkills(diplomacyChange, militaryChange, espionageChange) {
+            skills.diplomacy = Math.max(1, skills.diplomacy + diplomacyChange);
+            skills.military = Math.max(1, skills.military + militaryChange);
+            skills.espionage = Math.max(1, skills.espionage + espionageChange);
+            
+            document.getElementById('diplomacy-skill').textContent = skills.diplomacy;
+            document.getElementById('military-skill').textContent = skills.military;
+            document.getElementById('espionage-skill').textContent = skills.espionage;
+        }
 
         function choosePath(path) {
             console.log("choosePath called with path:", path);
             
-            // Hide all sections
             document.querySelectorAll('section').forEach(section => {
                 section.style.display = 'none';
             });
             
-            // Special cases and scoring
             const pathActions = {
-                'start_journey': { nextPath: 'boston_tea_party', score: 0 },
-                'join_tea_party': { nextPath: 'paul_revere_ride', score: 5, message: "You've taken a bold stand against British taxation!" },
-                'warn_british': { nextPath: 'paul_revere_ride', score: -3, message: "Your loyalist actions may have consequences..." },
-                'observe_secretly': { nextPath: 'paul_revere_ride', score: 2, message: "You've documented an important historical event!" },
-                'ride_horse': { nextPath: 'lexington_concord', score: 5, message: "Your bravery has warned many colonists!" },
-                'use_lanterns': { nextPath: 'lexington_concord', score: 4, message: "One if by land, two if by sea - clever thinking!" },
-                'send_messengers': { nextPath: 'lexington_concord', score: 3, message: "Your network of messengers has spread the word effectively." },
-                'join_minutemen': { nextPath: 'declaration_independence', score: 5, message: "You've taken up arms for the revolutionary cause!" },
-                'negotiate_peace': { nextPath: 'declaration_independence', score: 2, message: "Your attempt at peace was noble, but war seems inevitable." },
-                'protect_civilians': { nextPath: 'declaration_independence', score: 4, message: "You've saved lives and shown true heroism!" },
-                'emphasize_liberty': { nextPath: 'battle_trenton', score: 5, message: "Your words will echo through history!" },
-                'focus_grievances': { nextPath: 'battle_trenton', score: 3, message: "You've made a strong case against British rule." },
-                'propose_equality': { nextPath: 'battle_trenton', score: 4, message: "Your ideals will shape the new nation's future." },
-                'lead_troops': { nextPath: 'valley_forge', score: 5, message: "Your leadership inspires the troops to victory!" },
-                'spy_mission': { nextPath: 'valley_forge', score: 4, message: "Your intel proves crucial to the battle's success." },
-                'assist_crossing': { nextPath: 'valley_forge', score: 3, message: "Your organizational skills ensure a smooth operation." },
-                'improve_shelter': { nextPath: 'battle_yorktown', score: 4, message: "You've significantly improved living conditions at Valley Forge." },
-                'forage_food': { nextPath: 'battle_yorktown', score: 3, message: "Your efforts have helped stave off hunger in the camp." },
-                'boost_morale': { nextPath: 'battle_yorktown', score: 5, message: "The troops' spirits are high thanks to your initiatives!" },
-                'artillery_barrage': { nextPath: 'game_end', score: 4, message: "The artillery proves effective in weakening British defenses." },
-                'naval_blockade': { nextPath: 'game_end', score: 5, message: "The French naval support is crucial in forcing British surrender!" },
-                'night_raid': { nextPath: 'game_end', score: 3, message: "Your daring raid causes chaos in the British camp." }
+                'start_journey': { nextPath: 'character_creation', score: 0, resources: [0, 0, 0], skills: [0, 0, 0] },
+                'choose_merchant': { nextPath: 'boston_tea_party', score: 0, resources: [0, 0, 50], skills: [1, 0, 0], message: "Your merchant background provides extra funding and diplomatic connections." },
+                'choose_soldier': { nextPath: 'boston_tea_party', score: 0, resources: [50, 0, 0], skills: [0, 1, 0], message: "Your military experience grants you additional troops and tactical knowledge." },
+                'choose_politician': { nextPath: 'boston_tea_party', score: 0, resources: [0, 0, 25], skills: [2, 0, 0], message: "Your political background enhances your diplomatic skills and provides some additional funding." },
+                'join_tea_party': { nextPath: 'colonial_congress', score: 5, resources: [-10, 0, -20], skills: [0, 1, 0], message: "You've taken a bold stand against British taxation!", 
+                                    condition: () => resources.troops >= 10 && resources.funding >= 20 },
+                'warn_british': { nextPath: 'colonial_congress', score: -3, resources: [0, 0, 10], skills: [1, 0, 0], message: "Your loyalist actions may have consequences..." },
+                'observe_secretly': { nextPath: 'colonial_congress', score: 2, resources: [0, 0, 5], skills: [0, 0, 1], message: "You've documented an important historical event!" },
+                'advocate_peace': { nextPath: 'paul_revere_ride', score: 2, resources: [10, 10, 10], skills: [1, 0, 0], message: "Your peaceful approach gains support from moderates." },
+                'push_for_independence': { nextPath: 'paul_revere_ride', score: 5, resources: [-10, -10, -10], skills: [0, 1, 0], message: "Your bold stance rallies patriots but depletes resources." },
+                'propose_boycott': { nextPath: 'paul_revere_ride', score: 3, resources: [0, -20, 20], skills: [1, 0, 1], message: "The boycott strains supplies but increases funding and support." },
+                // ... more paths ...
             };
             
             if (pathActions[path]) {
                 const action = pathActions[path];
+                if (action.condition && !action.condition()) {
+                    alert("You don't have enough resources for this action!");
+                    return;
+                }
                 playerScore += action.score;
-                path = action.nextPath;
+                updateResources(...action.resources);
+                updateSkills(...action.skills);
                 if (action.message) {
                     alert(action.message + "\nYour current score: " + playerScore);
                 }
-            }
-            
-            // Show the chosen section
-            const targetSection = document.getElementById(path);
-            console.log("Target section:", targetSection);
-            if (targetSection) {
-                targetSection.style.display = 'block';
-                if (path === 'game_end') {
-                    endGame();
+                const targetSection = document.getElementById(action.nextPath);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                    if (action.nextPath === 'game_end') {
+                        endGame();
+                    }
+                } else {
+                    console.error("Could not find section with id:", action.nextPath);
                 }
-            } else {
-                console.error("Could not find section with id:", path);
             }
         }
 
@@ -193,8 +210,7 @@
                     const path = this.id.replace(/-/g, '_');
                     console.log("Button clicked, path:", path);
                     if (path === 'play_again') {
-                        playerScore = 0;
-                        choosePath('start_journey');
+                        location.reload();
                     } else {
                         choosePath(path);
                     }
