@@ -299,12 +299,68 @@
         function initBattleStrategy() {
     const container = document.getElementById('battle-strategy-container');
     container.innerHTML = `
-        <p>Allocate your resources to win the battle:</p>
-        <button onclick="allocateResources('troops')">Use Troops (${resources.troops})</button>
-        <button onclick="allocateResources('supplies')">Use Supplies (${resources.supplies})</button>
-        <button onclick="allocateResources('funding')">Use Funding (${resources.funding})</button>
+        <div id="battlefield" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px;"></div>
+        <button id="start-battle">Start Battle</button>
         <p id="battle-result"></p>
     `;
+
+    const battlefield = document.getElementById('battlefield');
+    for (let i = 0; i < 9; i++) {
+        const region = document.createElement('div');
+        region.style.border = '1px solid black';
+        region.style.height = '50px';
+        region.style.display = 'flex';
+        region.style.justifyContent = 'center';
+        region.style.alignItems = 'center';
+        region.dataset.troops = '0';
+        region.textContent = '0';
+        region.onclick = () => placeTroops(region);
+        battlefield.appendChild(region);
+    }
+
+    document.getElementById('start-battle').onclick = conductBattle;
+}
+
+function placeTroops(region) {
+    if (resources.troops > 0) {
+        resources.troops--;
+        region.dataset.troops = parseInt(region.dataset.troops) + 1;
+        region.textContent = region.dataset.troops;
+        updateResources(0, 0, 0);
+    }
+}
+
+function conductBattle() {
+    let playerScore = 0;
+    let enemyScore = 0;
+    const regions = document.querySelectorAll('#battlefield div');
+    
+    regions.forEach(region => {
+        const playerTroops = parseInt(region.dataset.troops);
+        const enemyTroops = Math.floor(Math.random() * 5);
+        if (playerTroops > enemyTroops) {
+            playerScore++;
+        } else if (enemyTroops > playerTroops) {
+            enemyScore++;
+        }
+    });
+
+    const resultElement = document.getElementById('battle-result');
+    if (playerScore > enemyScore) {
+        resultElement.textContent = "Victory! Your strategy was successful.";
+        playerScore += 5;
+        updateSkills(0, 1, 0);
+        updateRelationships(2, 0, 0);
+    } else {
+        resultElement.textContent = "Defeat. The enemy outmaneuvered us.";
+        updateRelationships(-1, 0, 0);
+    }
+
+    setTimeout(() => {
+        document.getElementById('battle_strategy').style.display = 'none';
+        document.getElementById('spy_network').style.display = 'block';
+        initSpyNetwork();
+    }, 2000);
 }
 
         function allocateResources(type) {
